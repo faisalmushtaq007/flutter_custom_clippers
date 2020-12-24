@@ -1,0 +1,53 @@
+import 'package:flutter/material.dart';
+
+class ClipFolderShape extends StatefulWidget {
+  @override
+  _ClipFolderShapeState createState() => _ClipFolderShapeState();
+}
+
+class _ClipFolderShapeState extends State<ClipFolderShape> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(),
+      body: Center(
+          child: ClipPath(
+        clipper: BackgroundClipper(),
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.7,
+          height: MediaQuery.of(context).size.height * 0.3,
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [Colors.orange, Colors.deepOrangeAccent],
+                begin: Alignment.bottomLeft,
+                end: Alignment.topRight),
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(30),
+              bottomLeft: Radius.circular(30),
+              bottomRight: Radius.circular(30),
+            ),
+          ),
+        ),
+      )),
+    );
+  }
+}
+
+class BackgroundClipper extends CustomClipper<Path> {
+  @override
+  getClip(Size size) {
+    var path = Path();
+    path.lineTo(0, size.height);
+    path.lineTo(size.width, size.height);
+    path.lineTo(size.width, size.height * 0.2);
+    path.lineTo(size.width * 0.5, size.height * 0.2);
+    path.lineTo(size.width * 0.3, 0);
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper oldClipper) {
+    return true;
+  }
+}
